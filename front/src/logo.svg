@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="220" height="60" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+    <title>TopUA logo</title>
+    <style>
+        .bold { font-family: "Montserrat", sans-serif; font-weight: 800; }
+    </style>
+
+    <!-- Текст «Top» — білий -->
+    <text class="bold" x="0"   y="46" font-size="54" fill="#FFFFFF">Top</text>
+
+    <!-- Текст «UA» — бордовий -->
+    <text class="bold" x="122" y="46" font-size="54" fill="#800020">UA</text>
+</svg>

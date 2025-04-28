@@ -1,0 +1,118 @@
+:root {
+    --burgundy-dark:   #2d0808;
+    --burgundy-accent: #a94343;
+    --white:           #ffffff;
+}
+
+/* ===== ОСНОВНИЙ БЛОК ===== */
+.projects {
+    background: var(--burgundy-dark);
+    color: var(--white);
+    padding: 80px 0 120px;
+    font-family: inherit;
+}
+
+.projects__inner {
+    width: min(1240px, 92%);
+    margin-inline: auto;
+}
+
+/* Заголовок */
+.projects__title {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-block: 0 40px;
+}
+
+/* Кнопка «Галузі» */
+.projects__btn {
+    border: 2px solid var(--burgundy-accent);
+    background: transparent;
+    color: var(--white);
+    padding: 12px 36px;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background .3s, color .3s;
+    margin-bottom: 48px;
+}
+.projects__btn--active,
+.projects__btn:hover {
+    background: var(--burgundy-accent);
+    color: #fff;
+}
+.projects__btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #ffffff33;
+}
+
+/* ===== ПАНЕЛЬ КАТЕГОРІЙ ===== */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+    margin-bottom: 48px;
+    list-style: none;
+    padding: 0;
+}
+.cat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    color: #c9c5c5;
+    cursor: pointer;
+    transition: color .25s;
+}
+.cat:hover { color: var(--white); }
+
+.cat__icon  { font-size: 22px; line-height: 1; }
+.cat__label { white-space: nowrap; }
+.cat__label--active {
+    color: var(--white);
+    border-bottom: 2px solid var(--burgundy-accent);
+}
+.cat__count { margin-left: 4px; font-weight: 500; }
+
+/* адаптивність */
+@media (max-width: 600px) {
+    .cat { font-size: 16px; }
+    .cat__icon { font-size: 18px; }
+}
+
+/* ===== СІТКА ПРОЄКТІВ ===== */
+.projects__grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Картка проєкту */
+.card {
+    position: relative;
+    aspect-ratio: 4/3;          /* сталий розмір незалежно від фото */
+    overflow: hidden;
+    border-radius: 8px;
+}
+.card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.card:hover .card__img { transform: scale(1.08); }
+
+/* Підкладка з текстом */
+.card__overlay {
+    position: absolute;
+    inset: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.75) 100%);
+}
+.card__title { margin: 0 0 6px;  font-size: 20px; font-weight: 600; }
+.card__desc  { margin: 0;        font-size: 14px; line-height: 1.35; }
+.card__cat   { margin: 10px 0 0; font-size: 13px; opacity: .8; }
