@@ -20,14 +20,17 @@ import TranslateIcon from '@mui/icons-material/Translate';
 import { useTranslation } from 'react-i18next';
 
 import HomePage from './HomePage';
-import ProductList from './ProductList';
-import ProductForm from './ProductForm';
+import ProductList from './system/ProductList';
+import ProductForm from './system/ProductForm';
 import LoginPage from './LoginPage';
 import AboutPage from './aboutPage/AboutPage';
-import ContactsPage from './ContactsPage';
+import ContactsPage from './contact/ContactsPage';
 import ProjectsPage from './project/ProjectsPage';
-import logo from './logo.svg';
+import ConsultationForm from './consultationFrrom/consultation'; // ← ДОДАНО
 
+import logo from './logo.svg';
+import flagUa from './img/ua.png';
+import flagUk from "./img/uk.png"
 const theme = createTheme({
     palette: { primary: { main: '#0072FF' }, secondary: { main: '#FF4081' } },
 });
@@ -92,8 +95,8 @@ export default function App() {
                     </IconButton>
                     <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => handleLangClose(null)}>
                         {[
-                            { code: 'ru', label: 'Русский', flag: '/flags/ru.png' },
-                            { code: 'en', label: 'English', flag: '/flags/en.png' },
+                            { code: 'ua', label: 'Українська', flag: `${flagUa}` },
+                            { code: 'en', label: 'English', flag: `${flagUk}` },
                         ].map(({ code, label, flag }) => (
                             <MenuItem key={code} onClick={() => handleLangClose(code)}>
                                 <Box component="img" src={flag} alt={code} sx={{ width: 24, mr: 1 }} />
@@ -123,6 +126,7 @@ export default function App() {
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/projects" element={<ProjectsPage />} />
                     <Route path="/contacts" element={<ContactsPage />} />
+                    <Route path="/consultation" element={<ConsultationForm />} /> {/* ← ДОДАНО */}
                     <Route path="/login" element={<LoginPage onLogin={() => setIsAuth(true)} />} />
 
                     {/* protected */}

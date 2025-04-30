@@ -1,6 +1,7 @@
 // src/pages/HomePage.jsx
 import React from 'react';
 import warehouseBg from './img/home.jpg';
+import { Link } from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -54,6 +55,8 @@ export default function HomePage() {
                 </Grid>
 
                 <Button
+                    component={Link}          // робимо кнопку посиланням
+                    to="/consultation"        // маршрут на сторінку форми
                     variant="contained"
                     size="large"
                     sx={{ mr: 3, bgcolor: '#c62828', '&:hover': { bgcolor: '#b71c1c' } }}

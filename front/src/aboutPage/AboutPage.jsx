@@ -1,11 +1,12 @@
 import './AboutPage.css';
+import ware from '../img/ware3.png';
 
 export default function AboutPage() {
     return (
         <section
             className="about-hero"
             /* 👉 підставте власний шлях до зображення */
-            style={{ backgroundImage: "url('/images/about-handshake.jpg')" }}
+            style={{ backgroundImage: `url(${ware})` }}
         >
             <div className="about__content">
                 <h1 className="about__title">Компанія&nbsp;Топлог</h1>

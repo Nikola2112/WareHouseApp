@@ -6,6 +6,12 @@ import ukr from '../img/ukr.png';
 import rosetka from '../img/img.png';
 import mxp from '../img/mxp.png';
 import farmak from '../img/farmak.png';
+import kyiv from '../img/kyiv.png';
+import dtec from '../img/dtec.png';
+import ukrPoshta from '../img/ukrPoshta.png';
+import kernel from '../img/kernel.png';
+import intertop from '../img/img_1.png';
+
 const projects = [
     {
         title: 'Нова Пошта',
@@ -53,31 +59,31 @@ const projects = [
         title: 'Київстар',
         desc: 'Централізований склад телеком-обладнання та SIM-карт',
         cat: 'Телеком',
-        img: '/images/projects/kyivstar.jpg',
+        img: kyiv,
     },
     {
         title: 'DTEK',
         desc: 'Склад запасних частин для енергетичного обладнання',
         cat: 'Енергетика',
-        img: '/images/projects/dtek.jpg',
+        img: dtec,
     },
     {
         title: 'Укрпошта',
         desc: 'Єдиний хаб сортування міжнародних поштових відправлень',
         cat: 'Комерційна логістика',
-        img: '/images/projects/ukrposhta.jpg',
+        img: ukrPoshta,
     },
     {
         title: 'Кернел',
         desc: 'Автоматизований зерновий термінал із системою WMS',
         cat: 'Агроіндустрія',
-        img: '/images/projects/kernel.jpg',
+        img: kernel,
     },
     {
         title: 'INTERTOP Ukraine',
         desc: 'Склад взуття та одягу з автоматичними пакувальними лініями',
         cat: 'Ритейл',
-        img: '/images/projects/intertop.jpg',
+        img: intertop,
     },
 ];
 
