@@ -19,6 +19,10 @@ export default function LoginPage({ onLogin }) {
         navigate('/products');
     };
 
+    const handleRegister = () => {
+        navigate('/register');
+    };
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
             <Paper sx={{ p: 4, width: 320 }}>
@@ -44,8 +48,11 @@ export default function LoginPage({ onLogin }) {
                         onChange={(e) => setUser({ ...user, password: e.target.value })}
                         required
                     />
-                    <Button variant="contained" fullWidth type="submit">
+                    <Button variant="contained" fullWidth type="submit" sx={{ mb: 1 }}>
                         Войти
+                    </Button>
+                    <Button variant="outlined" fullWidth onClick={handleRegister}>
+                        Зарегистрироваться
                     </Button>
                 </form>
             </Paper>

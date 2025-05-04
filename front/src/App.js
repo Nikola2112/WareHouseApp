@@ -26,11 +26,13 @@ import LoginPage from './LoginPage';
 import AboutPage from './aboutPage/AboutPage';
 import ContactsPage from './contact/ContactsPage';
 import ProjectsPage from './project/ProjectsPage';
-import ConsultationForm from './consultationFrrom/consultation'; // ← ДОДАНО
+import ConsultationForm from './consultationFrrom/consultation';
+import RegisterPage from './register'// ← ДОДАНО
 
 import logo from './logo.svg';
 import flagUa from './img/ua.png';
 import flagUk from "./img/uk.png"
+
 const theme = createTheme({
     palette: { primary: { main: '#0072FF' }, secondary: { main: '#FF4081' } },
 });
@@ -128,6 +130,7 @@ export default function App() {
                     <Route path="/contacts" element={<ContactsPage />} />
                     <Route path="/consultation" element={<ConsultationForm />} /> {/* ← ДОДАНО */}
                     <Route path="/login" element={<LoginPage onLogin={() => setIsAuth(true)} />} />
+                    <Route path="/register" element={<RegisterPage />} />
 
                     {/* protected */}
                     <Route element={<PrivateRoute isAuth={isAuth} />}>
