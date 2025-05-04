@@ -1,7 +1,7 @@
 package com.back.repository;
 
 
-import com.warehouse.model.Role;
+import com.back.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.back.controller;
 
 
-import com.warehouse.model.Product;
-import com.warehouse.service.ProductService;
+import com.back.model.Product;
+import com.back.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

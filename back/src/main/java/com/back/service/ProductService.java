@@ -1,7 +1,7 @@
 package com.back.service;
 
 
-import com.warehouse.model.Product;
+import com.back.model.Product;
 
 import java.util.List;
 

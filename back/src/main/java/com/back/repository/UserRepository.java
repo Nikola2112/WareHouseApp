@@ -1,7 +1,7 @@
 package com.back.repository;
 
 
-import com.warehouse.model.User;
+import com.back.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.back.service.impl;
 
-import com.warehouse.model.Product;
-import com.warehouse.repository.ProductRepository;
-import com.warehouse.service.ProductService;
+import com.back.model.Product;
+import com.back.repository.ProductRepository;
+import com.back.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
