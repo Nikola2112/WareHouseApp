@@ -1,78 +1,127 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
-    Box,
-    Paper,
+    Container,
     TextField,
     Button,
     Typography,
-} from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+    Box,
+    Alert,
+} from "@mui/material";
+import axios from "axios";
+
+// ✅ Один axios‑інстанс із базовим URL на бекенд
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080", // ← змінюйте за потреби
+    withCredentials: true, // бо в CorsConfiguration setAllowCredentials(true)
+    headers: { "Content-Type": "application/json" },
+});
 
 export default function RegisterPage() {
-    const navigate = useNavigate();
-    const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
+    const [form, setForm] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
     });
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    // ✍️ Проста клієнтська валідація
+    const validateForm = () => {
+        if (!form.firstName.trim()) return "Ім'я обов'язкове";
+        if (!form.lastName.trim()) return "Прізвище обов'язкове";
+        if (!/\S+@\S+\.\S+/.test(form.email)) return "Некоректний email";
+        if (form.password.length < 6) return "Пароль має містити ≥ 6 символів";
+        return null;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setSuccess("");
 
-        // TODO: Тут ти можеш додати відправку даних на бекенд
-        console.log('Реєстрація:', user);
+        const validationError = validateForm();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
 
-        // Після успішної реєстрації перенаправлення на сторінку логіну
-        navigate('/login');
+        try {
+            await api.post("/api/auth/register", form);
+            setSuccess("Успішна реєстрація!");
+            setForm({ firstName: "", lastName: "", email: "", password: "" });
+        } catch (err) {
+            console.error("Register error:", err.response || err);
+            setError(err.response?.data?.message || "Помилка при реєстрації");
+        }
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-            <Paper sx={{ p: 4, width: 320 }}>
-                <Typography variant="h5" sx={{ mb: 3 }}>
+        <Container maxWidth="sm">
+            <Box sx={{ mt: 8 }}>
+                <Typography variant="h4" gutterBottom>
                     Реєстрація
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                {error && (
+                    <Alert severity="error" sx={{ mb: 2 }}>
+                        {error}
+                    </Alert>
+                )}
+                {success && (
+                    <Alert severity="success" sx={{ mb: 2 }}>
+                        {success}
+                    </Alert>
+                )}
+                <form onSubmit={handleSubmit} noValidate>
                     <TextField
-                        label="Ім’я"
+                        label="Ім'я"
+                        name="firstName"
+                        value={form.firstName}
+                        onChange={handleChange}
                         fullWidth
-                        sx={{ mb: 2 }}
-                        value={user.firstName}
-                        onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+                        margin="normal"
                         required
                     />
                     <TextField
                         label="Прізвище"
+                        name="lastName"
+                        value={form.lastName}
+                        onChange={handleChange}
                         fullWidth
-                        sx={{ mb: 2 }}
-                        value={user.lastName}
-                        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                        margin="normal"
                         required
                     />
                     <TextField
-                        label="Електронна пошта"
+                        label="Email"
+                        name="email"
                         type="email"
+                        value={form.email}
+                        onChange={handleChange}
                         fullWidth
-                        sx={{ mb: 2 }}
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
+                        margin="normal"
                         required
                     />
                     <TextField
                         label="Пароль"
+                        name="password"
                         type="password"
+                        value={form.password}
+                        onChange={handleChange}
                         fullWidth
-                        sx={{ mb: 3 }}
-                        value={user.password}
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                        margin="normal"
                         required
                     />
-                    <Button variant="contained" fullWidth type="submit">
+                    <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
                         Зареєструватися
                     </Button>
                 </form>
-            </Paper>
-        </Box>
+            </Box>
+        </Container>
     );
 }
+

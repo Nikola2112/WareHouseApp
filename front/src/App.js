@@ -27,7 +27,7 @@ import AboutPage from './aboutPage/AboutPage';
 import ContactsPage from './contact/ContactsPage';
 import ProjectsPage from './project/ProjectsPage';
 import ConsultationForm from './consultationFrrom/consultation';
-import RegisterPage from './register'// ← ДОДАНО
+import RegisterPage from './register'
 
 import logo from './logo.svg';
 import flagUa from './img/ua.png';
