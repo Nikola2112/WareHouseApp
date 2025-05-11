@@ -19,15 +19,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { useTranslation } from 'react-i18next';
 
-import HomePage from './HomePage';
+import HomePage from './home/HomePage';
 import ProductList from './system/ProductList';
 import ProductForm from './system/ProductForm';
-import LoginPage from './LoginPage';
+import LoginPage from './auth/LoginPage';
 import AboutPage from './aboutPage/AboutPage';
 import ContactsPage from './contact/ContactsPage';
 import ProjectsPage from './project/ProjectsPage';
 import ConsultationForm from './consultationFrrom/consultation';
-import RegisterPage from './register'
+import RegisterPage from './auth/register'
 
 import logo from './logo.svg';
 import flagUa from './img/ua.png';

@@ -1,8 +1,7 @@
-package com.back.security;
+package com.back.security.auth;
 
 
 
-import com.back.security.sevice.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.servlet.*;
 import javax.servlet.http.*;

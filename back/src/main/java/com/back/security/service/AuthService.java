@@ -1,13 +1,17 @@
-package com.back.security.sevice;
+package com.back.security.service;
 
 import com.back.security.dto.AuthRequest;
 import com.back.security.dto.AuthResponse;
-import com.back.security.model.UserRepository;
+import com.back.security.repository.UserRepository;
 import com.back.security.model.Users;
 import com.back.security.role.Role;
+import com.back.security.auth.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +48,14 @@ public class AuthService {
     private AuthResponse toResponse(Users user) {
         String token = jwtService.generateToken(user);
         return new AuthResponse(token, user.getRole().name());
+    }
+
+    @Configuration
+    public static class PasswordConfig {
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
     }
 }
 

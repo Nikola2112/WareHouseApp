@@ -1,10 +1,10 @@
-package com.back.security;
+package com.back.security.controller;
 
 
 
 import com.back.security.dto.AuthRequest;
 import com.back.security.dto.AuthResponse;
-import com.back.security.sevice.AuthService;
+import com.back.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;

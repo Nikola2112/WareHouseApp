@@ -1,6 +1,6 @@
 // src/pages/HomePage.jsx
 import React from 'react';
-import warehouseBg from './img/home.jpg';
+import warehouseBg from '../img/home.jpg';
 import { Link } from 'react-router-dom';
 import {
     Box,

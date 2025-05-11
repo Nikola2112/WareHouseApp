@@ -1,7 +1,7 @@
-package com.back.security.sevice;
+package com.back.security.service;
 
 
-import com.back.security.model.UserRepository;
+import com.back.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;

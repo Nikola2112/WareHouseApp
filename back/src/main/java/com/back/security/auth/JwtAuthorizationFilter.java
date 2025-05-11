@@ -1,4 +1,4 @@
-package com.back.security;
+package com.back.security.auth;
 
 
 
@@ -6,8 +6,7 @@ package com.back.security;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.back.security.sevice.CustomUserDetailsService;
-import com.back.security.sevice.JwtService;
+import com.back.security.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
