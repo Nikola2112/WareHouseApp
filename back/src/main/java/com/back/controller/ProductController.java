@@ -10,13 +10,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*") // Разрешаем запросы с любого источника
+@CrossOrigin(
+        origins = "http://localhost:3000",
+        allowCredentials = "true",
+        maxAge = 3600
+)// Разрешаем запросы с любого источника
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    @Autowired
     private ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     // Получение списка всех товаров
     @GetMapping

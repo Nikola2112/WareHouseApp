@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import {
     Routes, Route, Link, Navigate, Outlet, useLocation,
 } from 'react-router-dom';
@@ -40,12 +40,17 @@ const theme = createTheme({
 const PrivateRoute = ({ isAuth }) =>
     isAuth ? <Outlet /> : <Navigate to="/login" replace />;
 
+
+
 export default function App() {
     const { pathname } = useLocation();
     const isHome = pathname === '/';
 
-    /* ---- авторизация‑заглушка ---- */
-    const [isAuth, setIsAuth] = useState(false);
+
+        /* ── авторизация по токену ── */
+        const [isAuth, setIsAuth] = useState(() => !!localStorage.getItem('token'));
+
+
 
     /* ---- i18n ---- */
     const { t, i18n } = useTranslation();

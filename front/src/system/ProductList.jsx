@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { api } from "../api";
 import {
     Container,
     Typography,
@@ -10,30 +10,32 @@ import {
     TableHead,
     TableRow,
     Paper,
-    IconButton
-} from '@mui/material';
-import { Link } from 'react-router-dom';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+    IconButton,
+    Button,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/api/products');
-            setProducts(res.data);
+            const { data } = await api.get("/products");
+            setProducts(data);
         } catch (err) {
-            console.error(err);
+            console.error("Помилка завантаження товарів", err);
         }
     };
 
     const deleteProduct = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/api/products/${id}`);
+            await api.delete(`/products/${id}`);
             fetchProducts();
         } catch (err) {
-            console.error(err);
+            console.error("Помилка видалення", err);
         }
     };
 
@@ -43,30 +45,35 @@ const ProductList = () => {
 
     return (
         <Container maxWidth="md" sx={{ mt: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-                Список товаров
+            <Typography variant="h5" gutterBottom>
+                Список товарів
             </Typography>
+
+            <Button variant="contained" component={Link} to="/add" sx={{ mb: 2 }}>
+                Додати товар
+            </Button>
+
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Название</TableCell>
+                            <TableCell>Назва</TableCell>
                             <TableCell>Код</TableCell>
-                            <TableCell>Цена</TableCell>
-                            <TableCell>Действия</TableCell>
+                            <TableCell>Ціна</TableCell>
+                            <TableCell align="center">Дії</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell>{product.name}</TableCell>
-                                <TableCell>{product.code}</TableCell>
-                                <TableCell>{product.price}</TableCell>
-                                <TableCell>
-                                    <IconButton component={Link} to={`/edit/${product.id}`} color="primary">
+                        {products.map((p) => (
+                            <TableRow key={p.id}>
+                                <TableCell>{p.name}</TableCell>
+                                <TableCell>{p.code}</TableCell>
+                                <TableCell>{p.price}</TableCell>
+                                <TableCell align="center">
+                                    <IconButton component={Link} to={`/edit/${p.id}`} color="primary">
                                         <EditIcon />
                                     </IconButton>
-                                    <IconButton onClick={() => deleteProduct(product.id)} color="secondary">
+                                    <IconButton onClick={() => deleteProduct(p.id)} color="secondary">
                                         <DeleteIcon />
                                     </IconButton>
                                 </TableCell>

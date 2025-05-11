@@ -1,12 +1,13 @@
 package com.back.security.sevice;
 
-import com.back.security.model.Users;
 import com.back.security.dto.AuthRequest;
 import com.back.security.dto.AuthResponse;
 import com.back.security.model.UserRepository;
+import com.back.security.model.Users;
 import com.back.security.role.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,27 +16,34 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepo;
     private final PasswordEncoder encoder;
-    private final AuthenticationManager authManager;
     private final JwtService jwtService;
+    private final AuthenticationManager authManager;
 
-    public AuthResponse register(AuthRequest request) {
-        Users users = Users.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(encoder.encode(request.getPassword()))
-                .role(Role.USER)
+    public AuthResponse register(AuthRequest req) {
+        if (userRepo.existsByEmail(req.getEmail())) {
+            throw new IllegalArgumentException("Email already in use");
+        }
+        Users user = Users.builder()
+                .firstName(req.getFirstName())
+                .lastName(req.getLastName())
+                .email(req.getEmail())
+                .password(encoder.encode(req.getPassword()))
+                .role(Role.ROLE_USER)
                 .build();
-        userRepo.save(users);
-        String token = jwtService.generateToken(users);
-        return new AuthResponse(token);
+        userRepo.save(user);
+        return toResponse(user);
     }
 
-    public AuthResponse login(AuthRequest request) {
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(), request.getPassword()));
-        var user = userRepo.findByEmail(request.getEmail()).orElseThrow();
+    public AuthResponse login(AuthRequest req) {
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
+        Users user = userRepo.findByEmail(req.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return toResponse(user);
+    }
+
+    private AuthResponse toResponse(Users user) {
         String token = jwtService.generateToken(user);
-        return new AuthResponse(token);
+        return new AuthResponse(token, user.getRole().name());
     }
 }
+

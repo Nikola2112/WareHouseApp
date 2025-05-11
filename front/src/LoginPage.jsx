@@ -1,61 +1,55 @@
 import React, { useState } from 'react';
+import { api } from './api';
 import {
-    Box,
-    Paper,
-    TextField,
-    Button,
-    Typography,
+    Box, Paper, TextField, Button, Typography, Alert,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-export default function LoginPage({ onLogin }) {
+const LoginPage = ({ onLogin = () => {} }) => {          // ← получаем колл-бек
     const navigate = useNavigate();
-    const [user, setUser] = useState({ email: '', password: '' });
+    const [form, setForm] = useState({ email: '', password: '' });
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: реальная авторизация
-        onLogin();
-        navigate('/products');
-    };
+        setError('');
+        try {
+            const { data } = await api.post('/auth/login', form);
 
-    const handleRegister = () => {
-        navigate('/register');
+            // Сохраняем токен для App.jsx  (и для інтерцептора)
+            localStorage.setItem('token', data.token);
+
+            onLogin();                 // сообщаем родителю, что авторизация удалась
+            navigate('/products');     // и переходим к списку
+        } catch {
+            setError('Невірний email або пароль');
+        }
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-            <Paper sx={{ p: 4, width: 320 }}>
-                <Typography variant="h5" sx={{ mb: 3 }}>
-                    Вход
-                </Typography>
+        <Box sx={{ display:'flex', justifyContent:'center', mt:10 }}>
+            <Paper sx={{ p:4, width:320 }}>
+                <Typography variant="h5" sx={{ mb:3 }}>Вхід</Typography>
+                {error && <Alert severity="error" sx={{ mb:2 }}>{error}</Alert>}
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        label="Email"
-                        type="email"
-                        fullWidth
-                        sx={{ mb: 2 }}
-                        value={user.email}
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
-                        required
-                    />
-                    <TextField
-                        label="Пароль"
-                        type="password"
-                        fullWidth
-                        sx={{ mb: 3 }}
-                        value={user.password}
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                        required
-                    />
-                    <Button variant="contained" fullWidth type="submit" sx={{ mb: 1 }}>
-                        Войти
+                    <TextField label="Email" type="email" fullWidth sx={{ mb:2 }}
+                               value={form.email}
+                               onChange={(e) => setForm({ ...form, email: e.target.value })}
+                               required />
+                    <TextField label="Пароль" type="password" fullWidth sx={{ mb:3 }}
+                               value={form.password}
+                               onChange={(e) => setForm({ ...form, password: e.target.value })}
+                               required />
+                    <Button variant="contained" fullWidth type="submit" sx={{ mb:1 }}>
+                        Увійти
                     </Button>
-                    <Button variant="outlined" fullWidth onClick={handleRegister}>
-                        Зарегистрироваться
+                    <Button variant="outlined" fullWidth component={Link} to="/register">
+                        Реєстрація
                     </Button>
                 </form>
             </Paper>
         </Box>
     );
-}
+};
+
+export default LoginPage;

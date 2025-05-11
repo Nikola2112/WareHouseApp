@@ -20,14 +20,14 @@ import java.util.List;
 @Setter
 @Entity
 public class Users implements UserDetails {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
-
-
 
     @Enumerated(EnumType.STRING)
     private Role role;
